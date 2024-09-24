@@ -2,6 +2,7 @@ package edu.grinnell.csc207.util;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.rmi.server.ExportException;
 
 /**
  * A simple set of utilities for dealing with input and output.
@@ -24,13 +25,16 @@ public class IOUtils {
    * @return
    *   The integer read.
    */
-  public static int readInt(PrintWriter pw, BufferedReader br, String prompt)
-      throws Exception {
+  public static int readInt(PrintWriter pw, BufferedReader br, String prompt) {
     if (prompt != null) {
       pw.print(prompt);
       pw.flush();
     } // if there is a prompt
-    String response = br.readLine();
-    return Integer.parseInt(response);
+    try {
+      String response = br.readLine();
+      return Integer.parseInt(response);
+    } catch (Exception e) {
+      return Integer.MIN_VALUE;
+    } // Reading / Parsing fails
   } // readInt
 } // class IOUtils
